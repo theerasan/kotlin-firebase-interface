@@ -5,14 +5,20 @@ import firebase.admin.firestore.Firestore
 import model.Song
 
 external val exports: dynamic
+external fun require(module:String):dynamic
 
 fun main(args: Array<String>) {
-    val functions = FirebaseApp.functions
-    val admin = FirebaseApp.admin
+
+    val firebaseApp = FirebaseApp(require("firebase-admin"), require("firebase-functions"))
+
+    val functions = firebaseApp.functions
+    val admin = firebaseApp.admin
 
     admin.initializeApp(functions.config().firebase)
 
-    val api = Express.api
+    val express = Express(require("express"))
+
+    val api = express.api
 
     api.get("") {req, res ->
         res.status(200).send(req.param("nickName") ?: "no params")
@@ -35,7 +41,7 @@ fun main(args: Array<String>) {
         res.status(200).send("Song id $id has been deleted")
     }
 
-    exports.helloWorld = FirebaseApp.https.onRequest(api)
+    exports.helloWorld = firebaseApp.https.onRequest(api)
 
     js("admin.firestore().settings({timestampsInSnapshots: true})")
 

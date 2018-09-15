@@ -2,7 +2,6 @@
   'use strict';
   var Unit = Kotlin.kotlin.Unit;
   var throwCCE = Kotlin.throwCCE;
-  var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   function main$lambda(req, res) {
     var tmp$;
@@ -29,37 +28,23 @@
   }
   function main(args) {
     var tmp$;
-    var functions = FirebaseApp$Companion_getInstance().functions;
-    var admin = FirebaseApp$Companion_getInstance().admin;
+    var firebaseApp = new FirebaseApp(require('firebase-admin'), require('firebase-functions'));
+    var functions = firebaseApp.functions;
+    var admin = firebaseApp.admin;
     admin.initializeApp(functions.config().firebase);
-    var api = Express$Companion_getInstance().api;
+    var express = new Express(require('express'));
+    var api = express.api;
     api.get('', main$lambda);
     api.post('/song/', main$lambda_0);
     api.put('/song/', main$lambda_1);
     api.delete('/song/:id', main$lambda_2);
-    exports.helloWorld = FirebaseApp$Companion_getInstance().https.onRequest(api);
+    exports.helloWorld = firebaseApp.https.onRequest(api);
     admin.firestore().settings({timestampsInSnapshots: true});
     var firestore = Kotlin.isType(tmp$ = admin.firestore(), Object) ? tmp$ : throwCCE();
   }
-  function Express() {
-    Express$Companion_getInstance();
-  }
-  function Express$Companion() {
-    Express$Companion_instance = this;
-    this.express_0 = require('express');
+  function Express(express) {
+    this.express_0 = express;
     this.api = this.express_0();
-  }
-  Express$Companion.$metadata$ = {
-    kind: Kind_OBJECT,
-    simpleName: 'Companion',
-    interfaces: []
-  };
-  var Express$Companion_instance = null;
-  function Express$Companion_getInstance() {
-    if (Express$Companion_instance === null) {
-      new Express$Companion();
-    }
-    return Express$Companion_instance;
   }
   Express.$metadata$ = {
     kind: Kind_CLASS,
@@ -69,26 +54,12 @@
   function asModel($receiver) {
     return JSON.parse(JSON.stringify($receiver));
   }
-  function FirebaseApp() {
-    FirebaseApp$Companion_getInstance();
-  }
-  function FirebaseApp$Companion() {
-    FirebaseApp$Companion_instance = this;
-    this.functions = require('firebase-functions');
-    this.admin = require('firebase-admin');
+  function FirebaseApp(adminJS, functionsJS) {
+    this.adminJS_0 = adminJS;
+    this.functionsJS_0 = functionsJS;
+    this.functions = this.functionsJS_0;
+    this.admin = this.adminJS_0;
     this.https = this.functions.https;
-  }
-  FirebaseApp$Companion.$metadata$ = {
-    kind: Kind_OBJECT,
-    simpleName: 'Companion',
-    interfaces: []
-  };
-  var FirebaseApp$Companion_instance = null;
-  function FirebaseApp$Companion_getInstance() {
-    if (FirebaseApp$Companion_instance === null) {
-      new FirebaseApp$Companion();
-    }
-    return FirebaseApp$Companion_instance;
   }
   FirebaseApp.$metadata$ = {
     kind: Kind_CLASS,
@@ -119,16 +90,10 @@
     interfaces: []
   };
   _.main_kand9s$ = main;
-  Object.defineProperty(Express, 'Companion', {
-    get: Express$Companion_getInstance
-  });
   var package$express = _.express || (_.express = {});
   package$express.Express = Express;
   var package$extention = _.extention || (_.extention = {});
   package$extention.asModel_th5c7u$ = asModel;
-  Object.defineProperty(FirebaseApp, 'Companion', {
-    get: FirebaseApp$Companion_getInstance
-  });
   var package$firebase = _.firebase || (_.firebase = {});
   package$firebase.FirebaseApp = FirebaseApp;
   var package$admin = package$firebase.admin || (package$firebase.admin = {});
