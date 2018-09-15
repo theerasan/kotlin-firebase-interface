@@ -1,19 +1,17 @@
 {
-  "name": "KFI",
-  "version": "1.0.0",
+  "name": "Kotlin-Firebase-Interface",
+  "version": "1.0.0-alpha",
   "description": "Kotlin firebase interface",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon node/index.js"
   },
-  "author": "",
+  "author": "Theerasan",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.4",
     "express": "^4.16.3",
     "firebase-functions": "^2.0.5",
-    "kotlin": "^1.2.61",
-    "nodemon": "^1.18.4"
+    "kotlin": "^1.2.61"
   }
 }
