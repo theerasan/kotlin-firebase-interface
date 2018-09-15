@@ -1,5 +1,8 @@
 package express
 
-class Express(private val express: dynamic) {
-    val api = express().unsafeCast<ExpressApp>()
+import firebase.functions.Https
+
+external interface Express {
+    val express: dynamic
+    val api: ExpressApp
 }
