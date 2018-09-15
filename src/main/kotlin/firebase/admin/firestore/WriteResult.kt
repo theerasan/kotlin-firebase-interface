@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * A WriteResult wraps the write time set by the Firestore servers on sets(), updates(), and creates().

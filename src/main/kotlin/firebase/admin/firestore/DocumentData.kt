@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * Object with any type properties

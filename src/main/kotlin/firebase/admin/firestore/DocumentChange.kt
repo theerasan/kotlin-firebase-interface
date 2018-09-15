@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * A DocumentChange represents a change to the documents matching a query. It contains the document affected

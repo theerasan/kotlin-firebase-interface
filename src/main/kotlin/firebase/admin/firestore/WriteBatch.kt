@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * A Firestore WriteBatch that can be used to atomically commit multiple write operations at once.
