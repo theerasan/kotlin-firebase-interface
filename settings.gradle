@@ -7,5 +7,5 @@ pluginManagement {
         }
     }
 }
-rootProject.name = 'KFI'
+rootProject.name = 'kotlin-firebase-interface'
 
