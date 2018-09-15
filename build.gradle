@@ -1,4 +1,4 @@
-group 'KFI'
+group 'kotlin-firebase-interface'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -19,11 +19,15 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-js"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 compileKotlin2Js.kotlinOptions {
     moduleKind = "commonjs"
     outputFile = "functions/index.js"
+}
+
+jar {
+    baseName = project.name
+    from project.buildDir
+    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
