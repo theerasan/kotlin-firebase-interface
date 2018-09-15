@@ -42,8 +42,4 @@ fun main(args: Array<String>) {
     }
 
     exports.helloWorld = firebaseApp.https.onRequest(api)
-
-    js("admin.firestore().settings({timestampsInSnapshots: true})")
-
-    val firestore = admin.firestore() as Firestore
 }
