@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 import kotlin.js.Promise
 

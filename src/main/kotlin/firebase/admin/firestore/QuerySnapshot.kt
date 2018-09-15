@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * A QuerySnapshot contains zero or more DocumentSnapshot objects representing the results of a query.

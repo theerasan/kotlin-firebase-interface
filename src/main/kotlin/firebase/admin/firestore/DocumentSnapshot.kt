@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * A DocumentSnapshot is an immutable representation for a document in a Firestore database.

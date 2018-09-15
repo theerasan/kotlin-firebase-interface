@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * The Firestore client represents a Firestore Database and is the entry point for all Firestore operations.

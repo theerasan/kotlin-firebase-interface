@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * An options object that configures the behavior of set() calls in DocumentReference,

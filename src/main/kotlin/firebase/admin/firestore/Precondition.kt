@@ -1,4 +1,4 @@
-package admin.firestore
+package firebase.admin.firestore
 
 /**
  * An options object that configures conditional behavior of update() and delete() calls
