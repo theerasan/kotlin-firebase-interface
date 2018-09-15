@@ -1,7 +1,0 @@
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /clinics/{clinicId} {
-        allow read, write: if false;
-    }
-  }
-}
