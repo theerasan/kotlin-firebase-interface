@@ -1,5 +1,6 @@
 package firebase.admin.database
 
+import firebase.functions.EventContext
 import kotlin.js.Promise
 
 external interface Reference {
@@ -34,4 +35,9 @@ external interface Reference {
     fun toJSON(): dynamic
     fun transaction(currentData:(DataSnapshot) -> Unit, error: (Error, Boolean, DataSnapshot) -> Unit)
     fun update(value: Any): Promise<Any?>
+
+    fun onCreate(callback: (DataSnapshot, EventContext) -> Unit)
+    fun onWrite(callback: (Change, EventContext) -> Unit)
+    fun onUpdate(callback: (Change, EventContext) -> Unit)
+    fun onDelete(callback: (DataSnapshot, EventContext) -> Unit)
 }

@@ -15,8 +15,8 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
         api.get("/:id/details/", getSong())
         api.get("/list/", getSongs())
         api.put("/create/", createSong())
-        api.post(":id/update/", updateSong())
-        api.delete(":id/delete/", deleteSong())
+        api.post("/:id/update/", updateSong())
+        api.delete("/:id/delete/", deleteSong())
         return api
     }
 
@@ -50,7 +50,7 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
                 }
     }
 
-    private fun getSongs(): (Request, Response) -> Unit = { req, res ->
+    private fun getSongs(): (Request, Response) -> Unit = { _, res ->
         database.ref("songs")
                 .once("value")
                 .then {
@@ -63,10 +63,27 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
     }
 
     private fun updateSong(): (Request, Response) -> Unit = { req, res ->
-
+        val id = req.param("id")
+        val song = req.body.asModel<SongExample>()
+        database.ref("songs/$id")
+                .update(song)
+                .then {
+                    res.status(200).send("Song id: $id has been updated")
+                }
+                .catch {
+                    res.status(500).send(it.message ?: "")
+                }
     }
 
     private fun deleteSong(): (Request, Response) -> Unit = { req, res ->
-
+        val id = req.param("id")
+        database.ref("songs/$id")
+                .remove()
+                .then {
+                    res.status(200).send("Song id: $id has been deleted")
+                }
+                .catch {
+                    res.status(500).send(it.message ?: "")
+                }
     }
 }

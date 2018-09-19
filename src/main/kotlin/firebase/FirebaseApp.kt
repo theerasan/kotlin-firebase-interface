@@ -11,4 +11,5 @@ external interface FirebaseApp {
     val functions: dynamic
     val https: Https
     val config: Config
+    val functionsDatabase: Database
 }

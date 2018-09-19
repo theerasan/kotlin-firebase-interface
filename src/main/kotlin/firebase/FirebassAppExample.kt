@@ -13,4 +13,5 @@ class FirebassAppExample : FirebaseApp {
     override val https: Https = functions.https.unsafeCast<Https>()
     override val database: Database
         get() = admin.asDynamic().database().unsafeCast<Database>()
+    override val functionsDatabase = functions.database.unsafeCast<Database>()
 }

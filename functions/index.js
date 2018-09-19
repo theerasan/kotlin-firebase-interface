@@ -10,6 +10,26 @@
       return Unit;
     };
   }
+  function main$lambda_0(snapshot, context) {
+    var tmp$, tmp$_0;
+    var original = snapshot.val();
+    console.log('Uppercasing', context.params.keys, original);
+    var toUpperCase = original.toUpperCase();
+    (tmp$_0 = (tmp$ = snapshot.ref.parent) != null ? tmp$.child('upppercase') : null) != null ? tmp$_0.set(toUpperCase) : null;
+    return Unit;
+  }
+  function main$lambda_1(change, context) {
+    console.log('onUpdate');
+    return Unit;
+  }
+  function main$lambda_2(change, context) {
+    console.log('onWrite');
+    return Unit;
+  }
+  function main$lambda_3(change, context) {
+    console.log('on delete');
+    return Unit;
+  }
   function main(args) {
     var firebaseApp = new FirebassAppExample();
     var admin = firebaseApp.admin;
@@ -21,6 +41,10 @@
     api.get('', main$lambda(database));
     exports.helloWorld = firebaseApp.https.onRequest(api);
     exports.song = firebaseApp.https.onRequest((new SongServiceExample(firebaseApp)).getApi());
+    exports.songCreateObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/title').onCreate(main$lambda_0);
+    exports.songUpdateObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/').onUpdate(main$lambda_1);
+    exports.songWriteObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/').onWrite(main$lambda_2);
+    exports.songSeleteObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/').onWrite(main$lambda_3);
   }
   function SongServiceExample(firebaseApp) {
     this.api_0 = (new ExpressExample(require('express'))).api;
@@ -30,8 +54,8 @@
     this.api_0.get('/:id/details/', this.getSong_0());
     this.api_0.get('/list/', this.getSongs_0());
     this.api_0.put('/create/', this.createSong_0());
-    this.api_0.post(':id/update/', this.updateSong_0());
-    this.api_0.delete(':id/delete/', this.deleteSong_0());
+    this.api_0.post('/:id/update/', this.updateSong_0());
+    this.api_0.delete('/:id/delete/', this.deleteSong_0());
     return this.api_0;
   };
   function SongServiceExample$createSong$lambda$lambda(closure$res, closure$song) {
@@ -90,8 +114,8 @@
   };
   function SongServiceExample$getSongs$lambda$lambda(closure$res) {
     return function (it) {
-      var keys = Object.values(it.val());
-      closure$res.status(200).send(keys);
+      var songs = Object.values(it.val());
+      closure$res.status(200).send(songs);
       return Unit;
     };
   }
@@ -103,7 +127,7 @@
     };
   }
   function SongServiceExample$getSongs$lambda(this$SongServiceExample) {
-    return function (req, res) {
+    return function (f, res) {
       this$SongServiceExample.database.ref('songs').once('value').then(SongServiceExample$getSongs$lambda$lambda(res)).catch(SongServiceExample$getSongs$lambda$lambda_0(res));
       return Unit;
     };
@@ -111,17 +135,52 @@
   SongServiceExample.prototype.getSongs_0 = function () {
     return SongServiceExample$getSongs$lambda(this);
   };
-  function SongServiceExample$updateSong$lambda(req, res) {
-    return Unit;
+  function SongServiceExample$updateSong$lambda$lambda(closure$res, closure$id) {
+    return function (it) {
+      closure$res.status(200).send('Song id: ' + toString(closure$id) + ' has been updated');
+      return Unit;
+    };
+  }
+  function SongServiceExample$updateSong$lambda$lambda_0(closure$res) {
+    return function (it) {
+      var tmp$;
+      closure$res.status(500).send((tmp$ = it.message) != null ? tmp$ : '');
+      return Unit;
+    };
+  }
+  function SongServiceExample$updateSong$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      var id = req.param('id');
+      var song = asModel(req.body);
+      this$SongServiceExample.database.ref('songs/' + toString(id)).update(song).then(SongServiceExample$updateSong$lambda$lambda(res, id)).catch(SongServiceExample$updateSong$lambda$lambda_0(res));
+      return Unit;
+    };
   }
   SongServiceExample.prototype.updateSong_0 = function () {
-    return SongServiceExample$updateSong$lambda;
+    return SongServiceExample$updateSong$lambda(this);
   };
-  function SongServiceExample$deleteSong$lambda(req, res) {
-    return Unit;
+  function SongServiceExample$deleteSong$lambda$lambda(closure$res, closure$id) {
+    return function (it) {
+      closure$res.status(200).send('Song id: ' + toString(closure$id) + ' has been deleted');
+      return Unit;
+    };
+  }
+  function SongServiceExample$deleteSong$lambda$lambda_0(closure$res) {
+    return function (it) {
+      var tmp$;
+      closure$res.status(500).send((tmp$ = it.message) != null ? tmp$ : '');
+      return Unit;
+    };
+  }
+  function SongServiceExample$deleteSong$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      var id = req.param('id');
+      this$SongServiceExample.database.ref('songs/' + toString(id)).remove().then(SongServiceExample$deleteSong$lambda$lambda(res, id)).catch(SongServiceExample$deleteSong$lambda$lambda_0(res));
+      return Unit;
+    };
   }
   SongServiceExample.prototype.deleteSong_0 = function () {
-    return SongServiceExample$deleteSong$lambda;
+    return SongServiceExample$deleteSong$lambda(this);
   };
   SongServiceExample.$metadata$ = {
     kind: Kind_CLASS,
@@ -154,6 +213,7 @@
     this.functions_gq6jhk$_0 = require('firebase-functions');
     this.config_69p57z$_0 = this.functions.config();
     this.https_6ikz3c$_0 = this.functions.https;
+    this.functionsDatabase_yop14d$_0 = this.functions.database;
   }
   Object.defineProperty(FirebassAppExample.prototype, 'admin', {
     get: function () {
@@ -178,6 +238,11 @@
   Object.defineProperty(FirebassAppExample.prototype, 'database', {
     get: function () {
       return this.admin.database();
+    }
+  });
+  Object.defineProperty(FirebassAppExample.prototype, 'functionsDatabase', {
+    get: function () {
+      return this.functionsDatabase_yop14d$_0;
     }
   });
   FirebassAppExample.$metadata$ = {
