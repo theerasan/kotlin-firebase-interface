@@ -1,8 +1,16 @@
 package firebase
 
+import firebase.admin.Admin
+import firebase.admin.database.Database
+import firebase.functions.Config
 import firebase.functions.Https
+import require
 
-class FirebassAppExample(override val admin: dynamic, override val functions: dynamic) : FirebaseApp {
-    override val https: Https
-        get() = functions.https.unsafeCast<Https>()
+class FirebassAppExample : FirebaseApp {
+    override val admin = require("firebase-admin").unsafeCast<Admin>()
+    override val functions = require("firebase-functions")
+    override val config: Config = functions.config().unsafeCast<Config>()
+    override val https: Https = functions.https.unsafeCast<Https>()
+    override val database: Database
+        get() = admin.asDynamic().database().unsafeCast<Database>()
 }

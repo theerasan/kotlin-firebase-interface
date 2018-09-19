@@ -1,43 +1,133 @@
 (function (_, Kotlin) {
   'use strict';
+  var toString = Kotlin.toString;
   var Unit = Kotlin.kotlin.Unit;
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  function main$lambda(req, res) {
-    var tmp$;
-    res.status(200).send((tmp$ = req.param('nickName')) != null ? tmp$ : 'no params');
-    return Unit;
-  }
-  function main$lambda_0(req, res) {
-    var song = asModel(req.body);
-    console.log(song);
-    res.status(200).send(song);
-    return Unit;
-  }
-  function main$lambda_1(req, res) {
-    var song = asModel(req.body);
-    console.log(song);
-    res.status(200).send('SongExample titled ' + song.title + ' by ' + song.artist + ' has been created');
-    return Unit;
-  }
-  function main$lambda_2(req, res) {
-    var tmp$;
-    var id = (tmp$ = req.param('id')) != null ? tmp$ : '';
-    res.status(200).send('SongExample id ' + id + ' has been deleted');
-    return Unit;
+  function main$lambda(closure$database) {
+    return function (req, res) {
+      var key = closure$database.ref('songs').push().key;
+      res.status(200).send('hello ' + toString(key));
+      return Unit;
+    };
   }
   function main(args) {
-    var firebaseApp = new FirebassAppExample(require('firebase-admin'), require('firebase-functions'));
-    var functions = firebaseApp.functions;
+    var firebaseApp = new FirebassAppExample();
     var admin = firebaseApp.admin;
-    admin.initializeApp(functions.config().firebase);
+    var config = firebaseApp.config;
+    admin.initializeApp(config.firebase);
+    var database = firebaseApp.database;
     var express = new ExpressExample(require('express'));
     var api = express.api;
-    api.get('', main$lambda);
-    api.post('/song/', main$lambda_0);
-    api.put('/song/', main$lambda_1);
-    api.delete('/song/:id', main$lambda_2);
+    api.get('', main$lambda(database));
     exports.helloWorld = firebaseApp.https.onRequest(api);
+    exports.song = firebaseApp.https.onRequest((new SongServiceExample(firebaseApp)).getApi());
   }
+  function SongServiceExample(firebaseApp) {
+    this.api_0 = (new ExpressExample(require('express'))).api;
+    this.database = firebaseApp.database;
+  }
+  SongServiceExample.prototype.getApi = function () {
+    this.api_0.get('/:id/details/', this.getSong_0());
+    this.api_0.get('/list/', this.getSongs_0());
+    this.api_0.put('/create/', this.createSong_0());
+    this.api_0.post(':id/update/', this.updateSong_0());
+    this.api_0.delete(':id/delete/', this.deleteSong_0());
+    return this.api_0;
+  };
+  function SongServiceExample$createSong$lambda$lambda(closure$res, closure$song) {
+    return function (it) {
+      closure$res.status(200).send(closure$song.title + ' by ' + closure$song.artist + ' has been created');
+      return Unit;
+    };
+  }
+  function SongServiceExample$createSong$lambda$lambda_0(closure$res) {
+    return function (it) {
+      var tmp$;
+      closure$res.status(500).send((tmp$ = it.message) != null ? tmp$ : '');
+      return Unit;
+    };
+  }
+  function SongServiceExample$createSong$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      var tmp$;
+      var key = (tmp$ = this$SongServiceExample.database.ref('songs').push().key) != null ? tmp$ : '';
+      var song = asModel(req.body);
+      song.key = key;
+      this$SongServiceExample.database.ref('songs/' + key).set(song).then(SongServiceExample$createSong$lambda$lambda(res, song)).catch(SongServiceExample$createSong$lambda$lambda_0(res));
+      return Unit;
+    };
+  }
+  SongServiceExample.prototype.createSong_0 = function () {
+    return SongServiceExample$createSong$lambda(this);
+  };
+  function SongServiceExample$getSong$lambda$lambda(closure$res, closure$id) {
+    return function (it) {
+      if (!it.exists()) {
+        closure$res.status(404).send('Song id: ' + toString(closure$id) + ' not found');
+        return;
+      }
+      var song = it.val();
+      closure$res.status(200).send(song);
+      return Unit;
+    };
+  }
+  function SongServiceExample$getSong$lambda$lambda_0(closure$res) {
+    return function (it) {
+      var tmp$;
+      closure$res.status(500).send((tmp$ = it.message) != null ? tmp$ : '');
+      return Unit;
+    };
+  }
+  function SongServiceExample$getSong$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      var id = req.param('id');
+      this$SongServiceExample.database.ref('songs/' + toString(id)).once('value').then(SongServiceExample$getSong$lambda$lambda(res, id)).catch(SongServiceExample$getSong$lambda$lambda_0(res));
+      return Unit;
+    };
+  }
+  SongServiceExample.prototype.getSong_0 = function () {
+    return SongServiceExample$getSong$lambda(this);
+  };
+  function SongServiceExample$getSongs$lambda$lambda(closure$res) {
+    return function (it) {
+      var keys = Object.values(it.val());
+      closure$res.status(200).send(keys);
+      return Unit;
+    };
+  }
+  function SongServiceExample$getSongs$lambda$lambda_0(closure$res) {
+    return function (it) {
+      var tmp$;
+      closure$res.status(500).send((tmp$ = it.message) != null ? tmp$ : '');
+      return Unit;
+    };
+  }
+  function SongServiceExample$getSongs$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      this$SongServiceExample.database.ref('songs').once('value').then(SongServiceExample$getSongs$lambda$lambda(res)).catch(SongServiceExample$getSongs$lambda$lambda_0(res));
+      return Unit;
+    };
+  }
+  SongServiceExample.prototype.getSongs_0 = function () {
+    return SongServiceExample$getSongs$lambda(this);
+  };
+  function SongServiceExample$updateSong$lambda(req, res) {
+    return Unit;
+  }
+  SongServiceExample.prototype.updateSong_0 = function () {
+    return SongServiceExample$updateSong$lambda;
+  };
+  function SongServiceExample$deleteSong$lambda(req, res) {
+    return Unit;
+  }
+  SongServiceExample.prototype.deleteSong_0 = function () {
+    return SongServiceExample$deleteSong$lambda;
+  };
+  SongServiceExample.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'SongServiceExample',
+    interfaces: []
+  };
   function ExpressExample(express) {
     this.express_deks74$_0 = express;
   }
@@ -59,9 +149,11 @@
   function asModel($receiver) {
     return JSON.parse(JSON.stringify($receiver));
   }
-  function FirebassAppExample(admin, functions) {
-    this.admin_a2tnkc$_0 = admin;
-    this.functions_gq6jhk$_0 = functions;
+  function FirebassAppExample() {
+    this.admin_a2tnkc$_0 = require('firebase-admin');
+    this.functions_gq6jhk$_0 = require('firebase-functions');
+    this.config_69p57z$_0 = this.functions.config();
+    this.https_6ikz3c$_0 = this.functions.https;
   }
   Object.defineProperty(FirebassAppExample.prototype, 'admin', {
     get: function () {
@@ -73,9 +165,19 @@
       return this.functions_gq6jhk$_0;
     }
   });
+  Object.defineProperty(FirebassAppExample.prototype, 'config', {
+    get: function () {
+      return this.config_69p57z$_0;
+    }
+  });
   Object.defineProperty(FirebassAppExample.prototype, 'https', {
     get: function () {
-      return this.functions.https;
+      return this.https_6ikz3c$_0;
+    }
+  });
+  Object.defineProperty(FirebassAppExample.prototype, 'database', {
+    get: function () {
+      return this.admin.database();
     }
   });
   FirebassAppExample.$metadata$ = {
@@ -95,7 +197,8 @@
     simpleName: 'GeoPoint',
     interfaces: []
   };
-  function SongExample(title, artist, album, duration) {
+  function SongExample(key, title, artist, album, duration) {
+    this.key = key;
     this.title = title;
     this.artist = artist;
     this.album = album;
@@ -107,6 +210,7 @@
     interfaces: []
   };
   _.main_kand9s$ = main;
+  _.SongServiceExample = SongServiceExample;
   var package$express = _.express || (_.express = {});
   package$express.ExpressExample = ExpressExample;
   var package$extention = _.extention || (_.extention = {});
