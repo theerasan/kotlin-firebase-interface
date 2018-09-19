@@ -1,14 +1,13 @@
 import express.ExpressApp
 import express.Request
 import express.Response
-import extention.Object
 import extention.asModel
 import firebase.FirebassAppExample
 import model.SongExample
 
-class SongServiceExample(firebaseApp: FirebassAppExample) {
-
+class SongDocServiceExample(firebaseApp: FirebassAppExample) {
     private val api = express.ExpressExample(require("express")).api
+    val store = firebaseApp.firestore
     val database = firebaseApp.database
 
     fun getApi(): ExpressApp {
@@ -20,30 +19,17 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
         return api
     }
 
-    private fun createSong(): (Request, Response) -> Unit = { req, res ->
-        val key = database.ref("songs").push().key ?: ""
-        val song = req.body.asModel<SongExample>()
-        song.key = key
-        database.ref("songs/$key")
-                .set(song)
-                .then {
-                    res.status(200).send("${song.title} by ${song.artist} has been created")
-                }.catch {
-                    res.status(500).send(it.message ?: "")
-                }
-    }
-
     private fun getSong(): (Request, Response) -> Unit = { req, res ->
-        val id = req.param("id")
-        database.ref("songs/$id")
-                .once("value")
+        val id = req.param("id") ?: ""
+        store.collection("songs")
+                .doc(id)
+                .get()
                 .then {
-                    if (!it.exists()) {
-                        res.status(404).send("Song id: $id not found")
+                    if (!it.exists) {
+                        res.status(404).send("Not fond song $id")
                         return@then
                     }
-                    val song = it.`val`<SongExample>()
-                    res.status(200).send(song)
+                    res.status(200).send(it.data<SongExample>())
                 }
                 .catch {
                     res.status(500).send(it.message ?: "")
@@ -51,25 +37,36 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
     }
 
     private fun getSongs(): (Request, Response) -> Unit = { _, res ->
-        database.ref("songs")
-                .limitToLast(3)
-                .once("value")
+        store.collection("songs")
+                .get()
                 .then {
-                    val songs: List<SongExample> = Object.values(it.`val`())
-                    res.status(200).send(songs)
-                }
-                .catch {
+            val songs = it.docs.map { it.data<SongExample>() }
+            res.status(200).send(songs)
+        }.catch {
+            res.status(500).send(it.message ?: "")
+        }
+    }
+
+    private fun createSong(): (Request, Response) -> Unit = { req, res ->
+        val key = database.ref("songs").push().key ?: ""
+        val song = req.body.asModel<SongExample>()
+        song.key = key
+        store.collection("songs").doc(key).set(song)
+                .then {
+                    res.status(200).send("${song.title} by ${song.artist} has been created")
+                }.catch {
                     res.status(500).send(it.message ?: "")
                 }
     }
 
     private fun updateSong(): (Request, Response) -> Unit = { req, res ->
-        val id = req.param("id")
+        val id = req.param("id") ?: ""
         val song = req.body.asModel<SongExample>()
-        database.ref("songs/$id")
+        store.collection("songs")
+                .doc(id)
                 .update(song)
                 .then {
-                    res.status(200).send("Song id: $id has been updated")
+                    res.status(200).send("Song $id has been updated")
                 }
                 .catch {
                     res.status(500).send(it.message ?: "")
@@ -77,11 +74,12 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
     }
 
     private fun deleteSong(): (Request, Response) -> Unit = { req, res ->
-        val id = req.param("id")
-        database.ref("songs/$id")
-                .remove()
+        val id = req.param("id") ?: ""
+        store.collection("songs")
+                .doc(id)
+                .delete()
                 .then {
-                    res.status(200).send("Song id: $id has been deleted")
+                    res.status(200).send("Song id $id has been deleted")
                 }
                 .catch {
                     res.status(500).send(it.message ?: "")

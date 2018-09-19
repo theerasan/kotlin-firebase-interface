@@ -33,16 +33,15 @@ fun main(args: Array<String>) {
         val toUpperCase = original.toUpperCase()
         snapshot.ref.parent?.child("upppercase")?.set(toUpperCase)
     }
-
     exports.songUpdateObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onUpdate {change, context ->
         console.log("onUpdate")
     }
-
     exports.songWriteObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onWrite {change, context ->
         console.log("onWrite")
     }
-
     exports.songSeleteObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onWrite {change, context ->
         console.log("on delete")
     }
+
+    exports.songDoc = firebaseApp.https.onRequest(SongDocServiceExample(firebaseApp).getApi())
 }

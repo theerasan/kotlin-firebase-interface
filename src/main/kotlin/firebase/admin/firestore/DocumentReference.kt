@@ -30,4 +30,5 @@ external interface DocumentReference {
      * @return A Promise that resolves once the data has been successfully written to the backend.
      */
     fun update(dataOrField: dynamic, preconditionOrValues: dynamic = definedExternally): Promise<dynamic>
+    fun update(data: dynamic): Promise<Any?>
 }
