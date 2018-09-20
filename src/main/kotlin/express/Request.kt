@@ -4,7 +4,7 @@ external interface Request {
     val app: dynamic
     val baseUrl: String
     val body: Any
-    val header: dynamic
+    val headers: dynamic
     val cookies: dynamic
     val fresh: Boolean
     val hostname: String
