@@ -8,7 +8,7 @@ import model.SongExample
 
 class SongServiceExample(firebaseApp: FirebassAppExample) {
 
-    private val api = express.ExpressExample(require("express")).api
+    private val api = express.ExpressExample().api
     val database = firebaseApp.database
 
     fun getApi(): ExpressApp {

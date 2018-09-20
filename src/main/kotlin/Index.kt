@@ -1,7 +1,5 @@
 import express.ExpressExample
-import extention.asModel
 import firebase.FirebassAppExample
-import model.SongExample
 
 external val exports: dynamic
 external fun require(module:String):dynamic
@@ -14,15 +12,11 @@ fun main(args: Array<String>) {
     admin.initializeApp(config.firebase)
     val database = firebaseApp.database
 
-
-
-    val express = ExpressExample(require("express"))
-
+    val express = ExpressExample()
     val api = express.api
 
     api.get("") {req, res ->
-        val key = database.ref("songs").push().key
-        res.status(200).send("hello $key")
+        res.status(200).send("hello")
     }
 
     exports.helloWorld = firebaseApp.https.onRequest(api)

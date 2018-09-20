@@ -6,7 +6,7 @@ import firebase.FirebassAppExample
 import model.SongExample
 
 class SongDocServiceExample(firebaseApp: FirebassAppExample) {
-    private val api = express.ExpressExample(require("express")).api
+    private val api = express.ExpressExample().api
     val store = firebaseApp.firestore
     val database = firebaseApp.database
 

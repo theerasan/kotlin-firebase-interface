@@ -17,7 +17,48 @@ dependencies {
    implementation "com.github.theerasan:kotlin-firebase-interface:version"
 }
 ```
-### Lastest version 1.0.4-alpha
+### Get start
+Implement Express interface
+
+```
+class ExpressImpl(override val express: dynamic) : Express {
+    override val express: dynamic
+        get() = require("express")
+    override val api: ExpressApp
+        get() = express().unsafeCast<ExpressApp>()
+}
+```
+
+Implement Firebase App interface
+
+```
+class FirebassAppImpl : FirebaseApp {
+    override val admin = require("firebase-admin").unsafeCast<Admin>()
+    override val functions = require("firebase-functions")
+    override val config: Config = functions.config().unsafeCast<Config>()
+    override val https: Https = functions.https.unsafeCast<Https>()
+    override val database: Database
+        get() = admin.asDynamic().database().unsafeCast<Database>()
+    override val functionsDatabase = functions.database.unsafeCast<Database>()
+    override val firestore: Firestore
+        get() = admin.asDynamic().firestore().unsafeCast<Firestore>()
+}
+```
+
+Your Index.kt file
+
+```
+val firebaseApp = FirebassAppImpl()
+val admin = firebaseApp.admin
+val config = firebaseApp.config
+admin.initializeApp(config.firebase)
+val database = firebaseApp.database
+
+val express = ExpressImpl()
+val api = express.api
+```
+
+### Latest version 1.0.4-alpha
 * Include express
 * Include firestore
 * Still in development and testing.
@@ -38,7 +79,7 @@ functions $ cd ..
 $
 ```
 
-### Run your functions on local enviralment
+### Run your functions on local environment
 ```
 $ firebase serve
 ```
@@ -47,8 +88,12 @@ Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-centra
 
 ### Implementing the interface
 * [x] [firestore](https://firebase.google.com/docs/reference/js/firebase.firestore)
-* [ ] [database](https://firebase.google.com/docs/reference/js/firebase.database)
-* [ ] [functions](https://firebase.google.com/docs/reference/js/firebase.functions)
+* [x] [database](https://firebase.google.com/docs/reference/js/firebase.database)
+* [x] [functions](https://firebase.google.com/docs/reference/js/firebase.functions)
 * [ ] [storage](https://firebase.google.com/docs/reference/js/firebase.storage)
-* [ ] [admin](https://firebase.google.com/docs/reference/admin/node/)
-* [x] [express](https://expressjs.com/en/4x/api.html) only handle https requiest 
+* [x] [admin](https://firebase.google.com/docs/reference/admin/node/)
+* [x] [express](https://expressjs.com/en/4x/api.html) only handle https request
+* [x] [Realtime Database triggers](https://firebase.google.com/docs/functions/database-events)
+* [ ] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
+* [ ] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
+* [ ] [Firestore Query](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/Query)

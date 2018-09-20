@@ -1,15 +1,12 @@
 (function (_, Kotlin) {
   'use strict';
-  var toString = Kotlin.toString;
   var Unit = Kotlin.kotlin.Unit;
   var Any = Object;
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  function main$lambda(closure$database) {
-    return function (req, res) {
-      var key = closure$database.ref('songs').push().key;
-      res.status(200).send('hello ' + toString(key));
-      return Unit;
-    };
+  var toString = Kotlin.toString;
+  function main$lambda(req, res) {
+    res.status(200).send('hello');
+    return Unit;
   }
   function main$lambda_0(snapshot, context) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2;
@@ -38,9 +35,9 @@
     var config = firebaseApp.config;
     admin.initializeApp(config.firebase);
     var database = firebaseApp.database;
-    var express = new ExpressExample(require('express'));
+    var express = new ExpressExample();
     var api = express.api;
-    api.get('', main$lambda(database));
+    api.get('', main$lambda);
     exports.helloWorld = firebaseApp.https.onRequest(api);
     exports.song = firebaseApp.https.onRequest((new SongServiceExample(firebaseApp)).getApi());
     exports.songCreateObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/title').onCreate(main$lambda_0);
@@ -50,7 +47,7 @@
     exports.songDoc = firebaseApp.https.onRequest((new SongDocServiceExample(firebaseApp)).getApi());
   }
   function SongDocServiceExample(firebaseApp) {
-    this.api_0 = (new ExpressExample(require('express'))).api;
+    this.api_0 = (new ExpressExample()).api;
     this.store = firebaseApp.firestore;
     this.database = firebaseApp.database;
   }
@@ -202,7 +199,7 @@
     interfaces: []
   };
   function SongServiceExample(firebaseApp) {
-    this.api_0 = (new ExpressExample(require('express'))).api;
+    this.api_0 = (new ExpressExample()).api;
     this.database = firebaseApp.database;
   }
   SongServiceExample.prototype.getApi = function () {
@@ -342,12 +339,11 @@
     simpleName: 'SongServiceExample',
     interfaces: []
   };
-  function ExpressExample(express) {
-    this.express_deks74$_0 = express;
+  function ExpressExample() {
   }
   Object.defineProperty(ExpressExample.prototype, 'express', {
     get: function () {
-      return this.express_deks74$_0;
+      return require('express');
     }
   });
   Object.defineProperty(ExpressExample.prototype, 'api', {
