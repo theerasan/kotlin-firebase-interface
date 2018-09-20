@@ -1,6 +1,7 @@
 package firebase
 
 import firebase.admin.Admin
+import firebase.admin.Auth
 import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
 import firebase.functions.Config
@@ -14,4 +15,5 @@ external interface FirebaseApp {
     val https: Https
     val config: Config
     val functionsDatabase: Database
+    val auth: Auth
 }

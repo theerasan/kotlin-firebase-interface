@@ -42,6 +42,8 @@ class FirebassAppImpl : FirebaseApp {
     override val functionsDatabase = functions.database.unsafeCast<Database>()
     override val firestore: Firestore
         get() = admin.asDynamic().firestore().unsafeCast<Firestore>()
+    override val auth: Auth
+            get() = admin.asDynamic().auth().unsafeCast<Auth>()
 }
 ```
 
@@ -58,7 +60,7 @@ val express = ExpressImpl()
 val api = express.api
 ```
 
-### Latest version 1.0.0-dev1
+### Latest version 1.0.0-dev3
 * Include express
 * Include firestore
 * Still in development and testing.

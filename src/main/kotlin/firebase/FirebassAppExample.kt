@@ -1,6 +1,7 @@
 package firebase
 
 import firebase.admin.Admin
+import firebase.admin.Auth
 import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
 import firebase.functions.Config
@@ -17,4 +18,6 @@ class FirebassAppExample : FirebaseApp {
     override val functionsDatabase = functions.database.unsafeCast<Database>()
     override val firestore: Firestore
         get() = admin.asDynamic().firestore().unsafeCast<Firestore>()
+    override val auth: Auth
+        get() = admin.asDynamic().auth().unsafeCast<Auth>()
 }
