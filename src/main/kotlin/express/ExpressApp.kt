@@ -17,9 +17,8 @@ external interface ExpressApp {
     fun put(path: String, functions: (Request, Response) -> Unit, vararg functionsArg: (Request, Response) -> Unit)
     fun set(key: String, value: String)
     fun use(path: String, functions: (Request, Response) -> Unit)
-    fun use(path: String, functions: (Request, Response) -> Unit, vararg functionsArg: (Request, Response) -> Unit)
-    fun use(functions: (Request, Response) -> Unit, vararg functionsArg: (Request, Response) -> Unit)
+    fun use(path: String, functions: (Request, Response, Unit) -> Unit)
     fun use(functions: (Request, Response) -> Unit)
     fun use(functions: (Request, Response, Unit) -> Unit)
-    fun use(functions: dynamic)
+    fun use(any: Any)
 }
