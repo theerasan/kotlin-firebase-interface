@@ -21,4 +21,5 @@ external interface ExpressApp {
     fun use(functions: (Request, Response) -> Unit, vararg functionsArg: (Request, Response) -> Unit)
     fun use(functions: (Request, Response) -> Unit)
     fun use(functions: (Request, Response, Unit) -> Unit)
+    fun use(functions: dynamic)
 }
