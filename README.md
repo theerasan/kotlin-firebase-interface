@@ -21,7 +21,7 @@ dependencies {
 Implement Express interface
 
 ```
-class ExpressImpl(override val express: dynamic) : Express {
+class ExpressImpl : Express {
     override val express: dynamic
         get() = require("express")
     override val api: ExpressApp
@@ -58,7 +58,7 @@ val express = ExpressImpl()
 val api = express.api
 ```
 
-### Latest version 1.0.4-alpha
+### Latest version 1.0.0-dev1
 * Include express
 * Include firestore
 * Still in development and testing.
