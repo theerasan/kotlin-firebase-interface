@@ -19,6 +19,6 @@ external interface ExpressApp {
     fun use(path: String, functions: (Request, Response) -> Unit)
     fun use(path: String, functions: (Request, Response, Unit) -> Unit)
     fun use(functions: (Request, Response) -> Unit)
-    fun use(functions: (Request, Response, Unit) -> Unit)
+    fun use(functions: (Request, Response, () -> Unit) -> Unit)
     fun use(any: Any)
 }
