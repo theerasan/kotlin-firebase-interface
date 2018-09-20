@@ -1,6 +1,8 @@
 # Kotlin-Firebase-Interface
 Let wrap the firebase admin to work perfectly with Kotlin
 
+[![](https://jitpack.io/v/theerasan/kotlin-firebase-interface.svg)](https://jitpack.io/#theerasan/kotlin-firebase-interface)
+
 ## Developer description
 This project still in development process but you can check the depedencies [here](https://jitpack.io/#theerasan/kotlin-firebase-interface) 
 
