@@ -20,10 +20,8 @@ external interface Request {
     val stale: Boolean
     val subdomains: List<String>
     val xhr: Boolean
+    val params: dynamic
 
-//    fun <T> getBody(): T {
-//        return JSON.parse((JSON.stringify(body)))
-//    }
     fun accepts(type: String)
     fun accepts(types: List<String>)
     fun get(field: String): String
