@@ -101,3 +101,4 @@ Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-centra
 * [ ] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
 * [ ] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
 * [ ] [Firestore Query](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/Query)
+* [x] [GeoPoint] for Firestore(https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint)
