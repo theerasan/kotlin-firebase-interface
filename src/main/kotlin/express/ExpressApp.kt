@@ -13,8 +13,10 @@ external interface ExpressApp {
     fun path(): String
     fun post(path: String, functions: (Request, Response) -> Unit)
     fun post(path: String, functions: (Request, Response) -> Unit, vararg functionsArg: (Request, Response) -> Unit)
+    fun post(path: String, middleware: Any, callback: (Request, Response) -> Unit)
     fun put(path: String, functions: (Request, Response) -> Unit)
     fun put(path: String, functions: (Request, Response) -> Unit, vararg functionsArg: (Request, Response) -> Unit)
+    fun put(path: String, middleware: Any, callback: (Request, Response) -> Unit)
     fun set(key: String, value: String)
     fun use(path: String, functions: (Request, Response) -> Unit)
     fun use(path: String, functions: (Request, Response, Unit) -> Unit)
