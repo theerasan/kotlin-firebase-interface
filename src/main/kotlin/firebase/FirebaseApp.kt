@@ -6,6 +6,7 @@ import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
 import firebase.functions.Config
 import firebase.functions.Https
+import firebase.storage.Storage
 
 external interface FirebaseApp {
     val admin: Admin
@@ -16,4 +17,7 @@ external interface FirebaseApp {
     val config: Config
     val functionsDatabase: Database
     val auth: Auth
+    val bucket: Storage
+
+    fun customBucket(name: String): Storage
 }
