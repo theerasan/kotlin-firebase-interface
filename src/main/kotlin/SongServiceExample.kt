@@ -55,7 +55,7 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
                 .limitToLast(3)
                 .once("value")
                 .then {
-                    val songs: List<SongExample> = Object.values(it.`val`())
+                    val songs: Array<SongExample> = Object.values(it.`val`())
                     res.status(200).send(songs)
                 }
                 .catch {

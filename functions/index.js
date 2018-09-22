@@ -4,6 +4,7 @@
   var Any = Object;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var toString = Kotlin.toString;
+  var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   function main$lambda(req, res) {
     res.status(200).send('hello');
     return Unit;
@@ -267,7 +268,10 @@
   function SongServiceExample$getSongs$lambda$lambda(closure$res) {
     return function (it) {
       var songs = Object.values(it.val());
-      closure$res.status(200).send(songs);
+      var tmp$ = closure$res.status(200);
+      var $receiver = songs[1];
+      $receiver.key = 'fdsaf';
+      tmp$.send($receiver);
       return Unit;
     };
   }
@@ -401,21 +405,21 @@
       return this.admin.firestore();
     }
   });
+  Object.defineProperty(FirebassAppExample.prototype, 'auth', {
+    get: function () {
+      return this.admin.auth();
+    }
+  });
   FirebassAppExample.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'FirebassAppExample',
     interfaces: []
   };
-  function GeoPoint(admin) {
-    this.admin = admin;
+  function UserMetadata() {
   }
-  GeoPoint.prototype.build_dleff0$ = function (latitude, longitude) {
-    var admin = this.admin;
-    return new firebase.admin.firestore.GeoPoint(latitude, longitude);
-  };
-  GeoPoint.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'GeoPoint',
+  UserMetadata.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'UserMetadata',
     interfaces: []
   };
   function SongExample(key, title, artist, album, duration) {
@@ -439,9 +443,7 @@
   package$extention.asModel_th5c7u$ = asModel;
   var package$firebase = _.firebase || (_.firebase = {});
   package$firebase.FirebassAppExample = FirebassAppExample;
-  var package$admin = package$firebase.admin || (package$firebase.admin = {});
-  var package$firestore = package$admin.firestore || (package$admin.firestore = {});
-  package$firestore.GeoPoint = GeoPoint;
+  package$firebase.UserMetadata = UserMetadata;
   var package$model = _.model || (_.model = {});
   package$model.SongExample = SongExample;
   main([]);
