@@ -268,10 +268,7 @@
   function SongServiceExample$getSongs$lambda$lambda(closure$res) {
     return function (it) {
       var songs = Object.values(it.val());
-      var tmp$ = closure$res.status(200);
-      var $receiver = songs[1];
-      $receiver.key = 'fdsaf';
-      tmp$.send($receiver);
+      closure$res.status(200).send(songs);
       return Unit;
     };
   }

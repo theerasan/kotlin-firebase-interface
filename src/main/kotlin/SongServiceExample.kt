@@ -4,13 +4,15 @@ import express.Response
 import extention.Object
 import extention.asModel
 import firebase.FirebassAppExample
+import firebase.storage.Storage
 import model.SongExample
 
 class SongServiceExample(firebaseApp: FirebassAppExample) {
 
     private val api = express.ExpressExample().api
     val database = firebaseApp.database
-    val bucket = firebaseApp.bucket
+
+
 
     fun getApi(): ExpressApp {
         api.get("/:id/details/", getSong())
@@ -18,12 +20,7 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
         api.put("/create/", createSong())
         api.post("/:id/update/", updateSong())
         api.delete("/:id/delete/", deleteSong())
-        api.post("/upload/", upload())
         return api
-    }
-
-    private fun upload(): (Request, Response) -> Unit = { req, res ->
-        bucket.
     }
 
     private fun createSong(): (Request, Response) -> Unit = { req, res ->

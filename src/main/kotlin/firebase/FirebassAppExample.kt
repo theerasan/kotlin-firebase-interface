@@ -21,9 +21,4 @@ class FirebassAppExample : FirebaseApp {
         get() = admin.asDynamic().firestore().unsafeCast<Firestore>()
     override val auth: Auth
         get() = admin.asDynamic().auth().unsafeCast<Auth>()
-    override val bucket: Storage
-        get() = admin.asDynamic().storage().bucket().unsafeCast<Storage>()
-    override fun customBucket(name: String): Storage {
-        return admin.asDynamic().storage().bucket(name).unsafeCast<Storage>()
-    }
 }
