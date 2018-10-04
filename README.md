@@ -62,9 +62,7 @@ val express = ExpressImpl()
 val api = express.api
 ```
 
-### Latest version 1.0.0-dev3
-* Include express
-* Include firestore
+### Latest version 1.0.0-dev11
 * Still in development and testing.
 
 ## Contributor description
@@ -90,7 +88,7 @@ $ firebase serve
 Not taking so long, the local url of your services will show up in your terminal.
 Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-central1/helloWorld](http://localhost:5000/kotlin-firebase-interface/us-central1/helloWorld) You'll see your functions work here.
 
-### Implementing the interface
+### Implementing the interface (version 1.0.0-dev11)
 * [x] [firestore](https://firebase.google.com/docs/reference/js/firebase.firestore)
 * [x] [database](https://firebase.google.com/docs/reference/js/firebase.database)
 * [x] [functions](https://firebase.google.com/docs/reference/js/firebase.functions)
@@ -101,4 +99,4 @@ Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-centra
 * [ ] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
 * [ ] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
 * [ ] [Firestore Query](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/Query)
-* [x] [GeoPoint] for Firestore(https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint)
+* [x] [GeoPoint](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint) for Firestore
