@@ -26,11 +26,11 @@ compileKotlin2Js.kotlinOptions {
     metaInfo = true
     moduleKind = "commonjs"
     outputFile = "functions/index.js"
-//    outputFile = new File(project.buildDir as File, "${project.name}.js")
 }
 
 jar {
-    baseName = project.name
-    from project.buildDir
-    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//    baseName = project.name
+//    from project.buildDir
+
+//    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

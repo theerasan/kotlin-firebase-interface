@@ -6,6 +6,7 @@ import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
 import firebase.functions.Config
 import firebase.functions.Https
+import firebase.storage.Storage
 import require
 
 class FirebassAppExample : FirebaseApp {
