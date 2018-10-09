@@ -4,6 +4,9 @@
   var Any = Object;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var toString = Kotlin.toString;
+  var get_indices = Kotlin.kotlin.collections.get_indices_m7z4lg$;
+  var shuffled = Kotlin.kotlin.collections.shuffled_7wnvza$;
+  var first = Kotlin.kotlin.collections.first_2p1efm$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   function main$lambda(req, res) {
     res.status(200).send('hello');
@@ -18,15 +21,15 @@
     (tmp$_2 = (tmp$_1 = snapshot.ref.parent) != null ? tmp$_1.child('upppercase') : null) != null ? tmp$_2.set(toUpperCase) : null;
     return Unit;
   }
-  function main$lambda_1(change, context) {
+  function main$lambda_1(f, f_0) {
     console.log('onUpdate');
     return Unit;
   }
-  function main$lambda_2(change, context) {
+  function main$lambda_2(f, f_0) {
     console.log('onWrite');
     return Unit;
   }
-  function main$lambda_3(change, context) {
+  function main$lambda_3(f, f_0) {
     console.log('on delete');
     return Unit;
   }
@@ -206,6 +209,7 @@
   SongServiceExample.prototype.getApi = function () {
     this.api_0.get('/:id/details/', this.getSong_0());
     this.api_0.get('/list/', this.getSongs_0());
+    this.api_0.get('/random', this.getRandomSong_0());
     this.api_0.put('/create/', this.createSong_0());
     this.api_0.post('/:id/update/', this.updateSong_0());
     this.api_0.delete('/:id/delete/', this.deleteSong_0());
@@ -281,12 +285,29 @@
   }
   function SongServiceExample$getSongs$lambda(this$SongServiceExample) {
     return function (f, res) {
-      this$SongServiceExample.database.ref('songs').limitToLast(3).once('value').then(SongServiceExample$getSongs$lambda$lambda(res)).catch(SongServiceExample$getSongs$lambda$lambda_0(res));
+      this$SongServiceExample.database.ref('songs').once('value').then(SongServiceExample$getSongs$lambda$lambda(res)).catch(SongServiceExample$getSongs$lambda$lambda_0(res));
       return Unit;
     };
   }
   SongServiceExample.prototype.getSongs_0 = function () {
     return SongServiceExample$getSongs$lambda(this);
+  };
+  function SongServiceExample$getRandomSong$lambda$lambda(closure$res) {
+    return function (it) {
+      var songs = Object.values(it.val());
+      var index = first(shuffled(get_indices(songs)));
+      closure$res.status(200).send(songs[index]);
+      return Unit;
+    };
+  }
+  function SongServiceExample$getRandomSong$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      this$SongServiceExample.database.ref('songs').once('value').then(SongServiceExample$getRandomSong$lambda$lambda(res));
+      return Unit;
+    };
+  }
+  SongServiceExample.prototype.getRandomSong_0 = function () {
+    return SongServiceExample$getRandomSong$lambda(this);
   };
   function SongServiceExample$updateSong$lambda$lambda(closure$res, closure$id) {
     return function (it) {

@@ -17,6 +17,7 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
     fun getApi(): ExpressApp {
         api.get("/:id/details/", getSong())
         api.get("/list/", getSongs())
+        api.get("/random", getRandomSong())
         api.put("/create/", createSong())
         api.post("/:id/update/", updateSong())
         api.delete("/:id/delete/", deleteSong())
@@ -55,7 +56,6 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
 
     private fun getSongs(): (Request, Response) -> Unit = { _, res ->
         database.ref("songs")
-                .limitToLast(3)
                 .once("value")
                 .then {
                     val songs: Array<SongExample> = Object.values(it.`val`())
@@ -63,6 +63,16 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
                 }
                 .catch {
                     res.status(500).send(it.message ?: "")
+                }
+    }
+
+    private fun getRandomSong(): (Request, Response) -> Unit = { req, res ->
+        database.ref("songs")
+                .once("value")
+                .then {
+                    val songs = Object.values<SongExample>(it.`val`())
+                    val index = songs.indices.shuffled().first()
+                    res.status(200).send(songs[index])
                 }
     }
 

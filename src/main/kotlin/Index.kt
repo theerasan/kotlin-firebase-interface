@@ -27,13 +27,13 @@ fun main(args: Array<String>) {
         val toUpperCase = original.toUpperCase()
         snapshot.ref.parent?.child("upppercase")?.set(toUpperCase)
     }
-    exports.songUpdateObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onUpdate {change, context ->
+    exports.songUpdateObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onUpdate {_, _ ->
         console.log("onUpdate")
     }
-    exports.songWriteObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onWrite {change, context ->
+    exports.songWriteObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onWrite {_, _ ->
         console.log("onWrite")
     }
-    exports.songSeleteObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onWrite {change, context ->
+    exports.songSeleteObserve = firebaseApp.functionsDatabase.ref("/songs/{keys}/").onWrite {_, _ ->
         console.log("on delete")
     }
 
