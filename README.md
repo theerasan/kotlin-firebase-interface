@@ -62,8 +62,8 @@ val express = ExpressImpl()
 val api = express.api
 ```
 
-### Latest version 1.0.0-dev11
-* Still in development and testing.
+### Latest version 1.0.0
+* Stable enough.
 
 ## Contributor description
 
