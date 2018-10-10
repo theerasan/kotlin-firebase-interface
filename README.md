@@ -1,7 +1,7 @@
 # Kotlin-Firebase-Interface
 Let wrap the firebase admin to work perfectly with Kotlin
 
-[![](https://jitpack.io/v/theerasan/kotlin-firebase-interface.svg)](https://jitpack.io/#theerasan/kotlin-firebase-interface)
+https://jitpack.io/#theerasan/kotlin-firebase-interface/1.0.0-alpha
 
 ## Developer description
 This project still in development process but you can check the depedencies [here](https://jitpack.io/#theerasan/kotlin-firebase-interface) 
@@ -11,7 +11,7 @@ This project still in development process but you can check the depedencies [her
 ```
 repositories {
    ...
-	 maven { url 'https://jitpack.io' }
+   maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -97,6 +97,6 @@ Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-centra
 * [x] [express](https://expressjs.com/en/4x/api.html) only handle https request
 * [x] [Realtime Database triggers](https://firebase.google.com/docs/functions/database-events)
 * [x] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
+* [x] [GeoPoint](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint) for Firestore
 * [ ] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
 * [ ] [Firestore Query](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/Query)
-* [x] [GeoPoint](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint) for Firestore
