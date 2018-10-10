@@ -6,4 +6,7 @@ package firebase.admin.firestore
  *
  * @see <a href="https://cloud.google.com/nodejs/docs/reference/firestore/0.10.x/DocumentChange">DocumentChange</a>
  */
-external interface DocumentChange
+external interface DocumentChange {
+    val after: DocumentSnapshot
+    val before: DocumentSnapshot
+}

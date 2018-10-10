@@ -30,6 +30,28 @@
     console.log('on delete');
     return Unit;
   }
+  function main$lambda_4(snapshot, f) {
+    var song = snapshot.data();
+    console.log('create ' + song.title);
+    return Unit;
+  }
+  function main$lambda_5(change, f) {
+    var song = change.before.data();
+    var songEdit = change.after.data();
+    console.log('write ' + song.title + ' to ' + songEdit.title);
+    return Unit;
+  }
+  function main$lambda_6(change, f) {
+    var song = change.before.data();
+    var songEdit = change.after.data();
+    console.log('update ' + song.title + ' to ' + songEdit.title);
+    return Unit;
+  }
+  function main$lambda_7(snapshot, f) {
+    var song = snapshot.data();
+    console.log(song.title + ' has been deleted');
+    return Unit;
+  }
   function main(args) {
     var firebaseApp = new FirebassAppExample();
     var admin = firebaseApp.admin;
@@ -41,11 +63,15 @@
     api.get('', main$lambda);
     exports.helloWorld = firebaseApp.https.onRequest(api);
     exports.song = firebaseApp.https.onRequest((new SongServiceExample(firebaseApp)).getApi());
-    exports.songCreateObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/title').onCreate(main$lambda_0);
-    exports.songUpdateObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/').onUpdate(main$lambda_1);
-    exports.songWriteObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/').onWrite(main$lambda_2);
-    exports.songSeleteObserve = firebaseApp.functionsDatabase.ref('/songs/{keys}/').onWrite(main$lambda_3);
+    exports.songCreateObserve = firebaseApp.databaseTriggers.ref('/songs/{keys}/title').onCreate(main$lambda_0);
+    exports.songUpdateObserve = firebaseApp.databaseTriggers.ref('/songs/{keys}/').onUpdate(main$lambda_1);
+    exports.songWriteObserve = firebaseApp.databaseTriggers.ref('/songs/{keys}/').onWrite(main$lambda_2);
+    exports.songDeleteObserve = firebaseApp.databaseTriggers.ref('/songs/{keys}/').onWrite(main$lambda_3);
     exports.songDoc = firebaseApp.https.onRequest((new SongDocServiceExample(firebaseApp)).getApi());
+    exports.songDocCreateObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onCreate(main$lambda_4);
+    exports.songDocWriteObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onWrite(main$lambda_5);
+    exports.songDocUpdateObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onUpdate(main$lambda_6);
+    exports.songDocDeleteObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onDelete(main$lambda_7);
   }
   function SongDocServiceExample(firebaseApp) {
     this.api_0 = (new ExpressExample()).api;
@@ -268,10 +294,7 @@
   function SongServiceExample$getSongs$lambda$lambda(closure$res) {
     return function (it) {
       var songs = Object.values(it.val());
-      var tmp$ = closure$res.status(200);
-      var $receiver = songs[1];
-      $receiver.key = 'fdsaf';
-      tmp$.send($receiver);
+      closure$res.status(200).send(songs);
       return Unit;
     };
   }
@@ -368,7 +391,8 @@
     this.functions_gq6jhk$_0 = require('firebase-functions');
     this.config_69p57z$_0 = this.functions.config();
     this.https_6ikz3c$_0 = this.functions.https;
-    this.functionsDatabase_yop14d$_0 = this.functions.database;
+    this.databaseTriggers_nxs2fv$_0 = this.functions.database;
+    this.firestoreTrigger_8pg20s$_0 = this.functions.firestore;
   }
   Object.defineProperty(FirebassAppExample.prototype, 'admin', {
     get: function () {
@@ -395,9 +419,14 @@
       return this.admin.database();
     }
   });
-  Object.defineProperty(FirebassAppExample.prototype, 'functionsDatabase', {
+  Object.defineProperty(FirebassAppExample.prototype, 'databaseTriggers', {
     get: function () {
-      return this.functionsDatabase_yop14d$_0;
+      return this.databaseTriggers_nxs2fv$_0;
+    }
+  });
+  Object.defineProperty(FirebassAppExample.prototype, 'firestoreTrigger', {
+    get: function () {
+      return this.firestoreTrigger_8pg20s$_0;
     }
   });
   Object.defineProperty(FirebassAppExample.prototype, 'firestore', {
