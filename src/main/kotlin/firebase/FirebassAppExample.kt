@@ -4,6 +4,7 @@ import firebase.admin.Admin
 import firebase.admin.Auth
 import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
+import firebase.admin.firestore.FirestoreTrigger
 import firebase.functions.Config
 import firebase.functions.Https
 import require
@@ -15,7 +16,8 @@ class FirebassAppExample : FirebaseApp {
     override val https: Https = functions.https.unsafeCast<Https>()
     override val database: Database
         get() = admin.asDynamic().database().unsafeCast<Database>()
-    override val functionsDatabase = functions.database.unsafeCast<Database>()
+    override val databaseTriggers = functions.database.unsafeCast<Database>()
+    override val firestoreTrigger = functions.firestore.unsafeCast<FirestoreTrigger>()
     override val firestore: Firestore
         get() = admin.asDynamic().firestore().unsafeCast<Firestore>()
     override val auth: Auth

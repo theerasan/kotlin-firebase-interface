@@ -92,11 +92,11 @@ Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-centra
 * [x] [firestore](https://firebase.google.com/docs/reference/js/firebase.firestore)
 * [x] [database](https://firebase.google.com/docs/reference/js/firebase.database)
 * [x] [functions](https://firebase.google.com/docs/reference/js/firebase.functions)
-* [ ] [storage](https://firebase.google.com/docs/reference/js/firebase.storage)
+* [x] [storage](https://firebase.google.com/docs/reference/js/firebase.storage)
 * [x] [admin](https://firebase.google.com/docs/reference/admin/node/)
 * [x] [express](https://expressjs.com/en/4x/api.html) only handle https request
 * [x] [Realtime Database triggers](https://firebase.google.com/docs/functions/database-events)
-* [ ] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
+* [x] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
 * [ ] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
 * [ ] [Firestore Query](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/Query)
 * [x] [GeoPoint](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint) for Firestore
