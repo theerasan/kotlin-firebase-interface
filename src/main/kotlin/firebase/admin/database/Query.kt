@@ -26,8 +26,8 @@ external interface Query {
     fun orderByKey(): Query
     fun orderByPriority(): Query
     fun orderByValue(): Query
-    fun startAt(index: Double): Query
-    fun startAt(index: Double, key: String): Query
+    fun startAt(index: Long): Query
+    fun startAt(index: Long, key: String): Query
     fun startAt(value: String): Query
     fun startAt(value: Boolean): Query
     fun startAt(value: Boolean, key: String): Query

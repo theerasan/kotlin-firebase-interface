@@ -30,8 +30,8 @@ external interface Reference {
     fun remove(): Promise<Any?>
     fun set(value: Any): Promise<Any?>
     fun setWithPriority(value: Any, newPriority: Any): Promise<Any?>
-    fun startAt(index: Double): Query
-    fun startAt(index: Double, key: String): Query
+    fun startAt(index: Long): Query
+    fun startAt(index: Long, key: String): Query
     fun startAt(value: String): Query
     fun startAt(value: Boolean): Query
     fun startAt(value: Boolean, key: String): Query
