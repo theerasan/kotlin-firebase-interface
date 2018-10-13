@@ -3,6 +3,8 @@
   var Unit = Kotlin.kotlin.Unit;
   var Any = Object;
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var throwCCE = Kotlin.throwCCE;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var toString = Kotlin.toString;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   function main$lambda(req, res) {
@@ -36,9 +38,7 @@
     return Unit;
   }
   function main$lambda_5(change, f) {
-    var song = change.before.data();
-    var songEdit = change.after.data();
-    console.log('write ' + song.title + ' to ' + songEdit.title);
+    console.log('write');
     return Unit;
   }
   function main$lambda_6(change, f) {
@@ -114,11 +114,11 @@
   SongDocServiceExample.prototype.getSong_0 = function () {
     return SongDocServiceExample$getSong$lambda(this);
   };
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
+  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   function SongDocServiceExample$getSongs$lambda$lambda(closure$res) {
     return function (it) {
       var $receiver = it.docs;
-      var destination = ArrayList_init($receiver.length);
+      var destination = ArrayList_init_0($receiver.length);
       var tmp$;
       for (tmp$ = 0; tmp$ !== $receiver.length; ++tmp$) {
         var item = $receiver[tmp$];
@@ -231,11 +231,40 @@
   }
   SongServiceExample.prototype.getApi = function () {
     this.api_0.get('/:id/details/', this.getSong_0());
+    this.api_0.get('/:artist/list', this.getSongsByArtist_0());
     this.api_0.get('/list/', this.getSongs_0());
     this.api_0.put('/create/', this.createSong_0());
     this.api_0.post('/:id/update/', this.updateSong_0());
     this.api_0.delete('/:id/delete/', this.deleteSong_0());
     return this.api_0;
+  };
+  function SongServiceExample$getSongsByArtist$lambda$lambda(closure$songs, closure$ref) {
+    return function (snapshot, f) {
+      console.log(snapshot.val());
+      closure$songs.add_11rb$(snapshot.val());
+      closure$ref.off();
+      return Unit;
+    };
+  }
+  function SongServiceExample$getSongsByArtist$lambda$lambda$lambda(closure$res, closure$songs) {
+    return function (it) {
+      closure$res.status(200).send(closure$songs);
+      return Unit;
+    };
+  }
+  function SongServiceExample$getSongsByArtist$lambda(this$SongServiceExample) {
+    return function (req, res) {
+      var tmp$;
+      var artist = typeof (tmp$ = req.params.artist) === 'string' ? tmp$ : throwCCE();
+      var songs = ArrayList_init();
+      var ref = this$SongServiceExample.database.ref('songs').orderByChild('artist').equalTo(artist).limitToFirst(10);
+      ref.on('child_added', SongServiceExample$getSongsByArtist$lambda$lambda(songs, ref));
+      ref.once('value').then(SongServiceExample$getSongsByArtist$lambda$lambda$lambda(res, songs));
+      return Unit;
+    };
+  }
+  SongServiceExample.prototype.getSongsByArtist_0 = function () {
+    return SongServiceExample$getSongsByArtist$lambda(this);
   };
   function SongServiceExample$createSong$lambda$lambda(closure$res, closure$song) {
     return function (it) {
@@ -307,7 +336,7 @@
   }
   function SongServiceExample$getSongs$lambda(this$SongServiceExample) {
     return function (f, res) {
-      this$SongServiceExample.database.ref('songs').limitToLast(3).once('value').then(SongServiceExample$getSongs$lambda$lambda(res)).catch(SongServiceExample$getSongs$lambda$lambda_0(res));
+      this$SongServiceExample.database.ref('songs').once('value').then(SongServiceExample$getSongs$lambda$lambda(res)).catch(SongServiceExample$getSongs$lambda$lambda_0(res));
       return Unit;
     };
   }
