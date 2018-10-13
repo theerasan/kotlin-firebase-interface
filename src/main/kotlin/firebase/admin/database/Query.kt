@@ -26,6 +26,10 @@ external interface Query {
     fun orderByKey(): Query
     fun orderByPriority(): Query
     fun orderByValue(): Query
-    fun startAt(index: Int): Promise<DataSnapshot>
+    fun startAt(index: Int): Query
+    fun startAt(index: Int, key: String): Query
+    fun startAt(value: String): Query
+    fun startAt(value: Boolean): Query
+    fun startAt(value: Boolean, key: String): Query
     fun toJSON(): dynamic
 }
