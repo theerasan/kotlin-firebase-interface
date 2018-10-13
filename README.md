@@ -62,7 +62,7 @@ val express = ExpressImpl()
 val api = express.api
 ```
 
-### Latest version 1.0.0
+### Latest version 1.0.1
 * Stable enough.
 
 ## Contributor description
@@ -98,5 +98,5 @@ Click the url for ex. [http://localhost:5000/kotlin-firebase-interface/us-centra
 * [x] [Realtime Database triggers](https://firebase.google.com/docs/functions/database-events)
 * [x] [Cloud Firestore triggers](https://firebase.google.com/docs/functions/firestore-events)
 * [x] [GeoPoint](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint) for Firestore
-* [ ] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
+* [x] [Realtime Database Query](https://firebase.google.com/docs/reference/android/com/google/firebase/database/Query)
 * [ ] [Firestore Query](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/Query)
