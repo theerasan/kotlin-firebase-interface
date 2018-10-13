@@ -8,7 +8,6 @@ external interface Reference {
     val parent: Reference?
     val ref: Reference
     val root: Reference
-
     fun child(path: String): Reference
     fun endAt(value: String, key: String?): Query
     fun endAt(value: Int, key: String?): Query
@@ -31,11 +30,14 @@ external interface Reference {
     fun remove(): Promise<Any?>
     fun set(value: Any): Promise<Any?>
     fun setWithPriority(value: Any, newPriority: Any): Promise<Any?>
-    fun startAt(index: Int): Promise<DataSnapshot>
+    fun startAt(index: Double): Query
+    fun startAt(index: Double, key: String): Query
+    fun startAt(value: String): Query
+    fun startAt(value: Boolean): Query
+    fun startAt(value: Boolean, key: String): Query
     fun toJSON(): dynamic
     fun transaction(currentData:(DataSnapshot) -> Unit, error: (Error, Boolean, DataSnapshot) -> Unit)
     fun update(value: Any): Promise<Any?>
-
     fun onCreate(callback: (DataSnapshot, EventContext) -> Unit)
     fun onWrite(callback: (Change, EventContext) -> Unit)
     fun onUpdate(callback: (Change, EventContext) -> Unit)

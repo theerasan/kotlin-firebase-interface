@@ -62,7 +62,7 @@ val express = ExpressImpl()
 val api = express.api
 ```
 
-### Latest version 1.0.1
+### Latest version 1.0.2
 * Stable enough.
 
 ## Contributor description
