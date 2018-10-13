@@ -5,6 +5,8 @@ import extention.Object
 import extention.asModel
 import firebase.FirebassAppExample
 import model.SongExample
+import kotlin.coroutines.experimental.*
+import kotlin.js.Promise
 
 class SongServiceExample(firebaseApp: FirebassAppExample) {
 
@@ -13,11 +15,33 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
 
     fun getApi(): ExpressApp {
         api.get("/:id/details/", getSong())
+        api.get("/:artist/list", getSongsByArtist())
         api.get("/list/", getSongs())
         api.put("/create/", createSong())
         api.post("/:id/update/", updateSong())
         api.delete("/:id/delete/", deleteSong())
         return api
+    }
+
+    private fun getSongsByArtist(): (Request, Response) -> Unit = { req, res ->
+        val artist = req.params.artist as String
+        val songs = ArrayList<SongExample>()
+
+        val ref = database.ref("songs")
+                .orderByChild("artist")
+                .equalTo(artist)
+                .limitToFirst(10)
+
+        ref.on("child_added") { snapshot, _ ->
+            console.log(snapshot.`val`())
+            songs.add(snapshot.`val`())
+            ref.off()
+        }.also { _ ->
+            ref.once("value")
+                    .then {
+                        res.status(200).send(songs)
+                    }
+        }
     }
 
     private fun createSong(): (Request, Response) -> Unit = { req, res ->
@@ -52,7 +76,6 @@ class SongServiceExample(firebaseApp: FirebassAppExample) {
 
     private fun getSongs(): (Request, Response) -> Unit = { _, res ->
         database.ref("songs")
-                .limitToLast(3)
                 .once("value")
                 .then {
                     val songs: Array<SongExample> = Object.values(it.`val`())
