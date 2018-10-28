@@ -5,6 +5,7 @@ import firebase.admin.Auth
 import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
 import firebase.admin.firestore.FirestoreTrigger
+import firebase.admin.storage.Storage
 import firebase.functions.Config
 import firebase.functions.Https
 import require
@@ -22,4 +23,6 @@ class FirebassAppExample : FirebaseApp {
         get() = admin.asDynamic().firestore().unsafeCast<Firestore>()
     override val auth: Auth
         get() = admin.asDynamic().auth().unsafeCast<Auth>()
+    override val storage: Storage
+        get() = admin.asDynamic().storage().bucket().unsafeCast<Storage>()
 }
