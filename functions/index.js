@@ -52,6 +52,10 @@
     console.log(song.title + ' has been deleted');
     return Unit;
   }
+  function main$lambda_8(obj) {
+    console.log(JSON.stringify(obj));
+    return Unit;
+  }
   function main(args) {
     var firebaseApp = new FirebassAppExample();
     var admin = firebaseApp.admin;
@@ -72,6 +76,7 @@
     exports.songDocWriteObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onWrite(main$lambda_5);
     exports.songDocUpdateObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onUpdate(main$lambda_6);
     exports.songDocDeleteObserve = firebaseApp.firestoreTrigger.document('songs/{songId}').onDelete(main$lambda_7);
+    exports.storageTrigger = firebaseApp.storageTrigger.onFinalize(main$lambda_8);
   }
   function SongDocServiceExample(firebaseApp) {
     this.api_0 = (new ExpressExample()).api;
@@ -466,6 +471,16 @@
   Object.defineProperty(FirebassAppExample.prototype, 'auth', {
     get: function () {
       return this.admin.auth();
+    }
+  });
+  Object.defineProperty(FirebassAppExample.prototype, 'storage', {
+    get: function () {
+      return this.admin.storage().bucket();
+    }
+  });
+  Object.defineProperty(FirebassAppExample.prototype, 'storageTrigger', {
+    get: function () {
+      return this.functions.storage.bucket('kotlin-firebase-interface.appspot.com').object();
     }
   });
   FirebassAppExample.$metadata$ = {

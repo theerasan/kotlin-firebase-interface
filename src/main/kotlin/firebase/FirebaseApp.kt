@@ -20,4 +20,5 @@ external interface FirebaseApp {
     val databaseTriggers: Database
     val firestoreTrigger: FirestoreTrigger
     val auth: Auth
+    val storageTrigger: dynamic
 }

@@ -66,4 +66,8 @@ fun main(args: Array<String>) {
                 val song = snapshot.data<SongExample>()
                 console.log("${song.title} has been deleted")
             }
+
+    exports.storageTrigger = firebaseApp.storageTrigger.onFinalize { obj ->
+        console.log(JSON.stringify(obj))
+    }
 }

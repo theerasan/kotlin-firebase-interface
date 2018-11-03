@@ -6,6 +6,7 @@ import firebase.admin.database.Database
 import firebase.admin.firestore.Firestore
 import firebase.admin.firestore.FirestoreTrigger
 import firebase.admin.storage.Storage
+import firebase.admin.storage.StorageTrigger
 import firebase.functions.Config
 import firebase.functions.Https
 import require
@@ -25,4 +26,6 @@ class FirebassAppExample : FirebaseApp {
         get() = admin.asDynamic().auth().unsafeCast<Auth>()
     override val storage: Storage
         get() = admin.asDynamic().storage().bucket().unsafeCast<Storage>()
+    override val storageTrigger: StorageTrigger
+        get() = functions.storage.bucket("kotlin-firebase-interface.appspot.com").`object`().unsafeCast<StorageTrigger>()
 }
